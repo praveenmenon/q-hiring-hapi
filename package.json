@@ -1,0 +1,22 @@
+{
+  "name": "q-hiring-hapi",
+  "version": "9.11.1",
+  "description": "Qwinix recruitment application with nodejs Hapi framework and postgres",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/praveenmenon/q-hiring-hapi.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/praveenmenon/q-hiring-hapi/issues"
+  },
+  "homepage": "https://github.com/praveenmenon/q-hiring-hapi#readme",
+  "dependencies": {
+    "hapi": "^17.4.0"
+  }
+}
