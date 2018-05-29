@@ -5,7 +5,7 @@ const Sequelize = require('sequelize');
 let exam = {};
 
 exports.getQuestions = (req, res) => {
-  if (authentication.validateUser(req)){
+  return authentication.validateUser(req).then((userExist) => {
     return model.question.findAll({ raw: true, attributes: { exclude: ['answer', 'createdAt', 'updatedAt', 'section_id'] }, where: { section_id: 1 }, order: [ Sequelize.fn('RANDOM') ], limit: 20}).then((verbal) => {
       exam['verbal'] = verbal;
       verbal.forEach((element, index) => {
@@ -37,7 +37,7 @@ exports.getQuestions = (req, res) => {
       console.log('error in verbal section:', err);
       return { message: 'error in verbal section', error: err }
     });
-  } else {
-    return { success: false, error: 'session expired' }
-  }
+  }).catch((err) => {
+    return {message: 'User does not exist', }
+  })
 }

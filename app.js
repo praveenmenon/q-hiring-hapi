@@ -4,10 +4,8 @@ const routes = require('./config/routes');
 
 const validate = async (decode, request) => {
   if(!decode.email) {
-    console.log('isValid: false',);
     return { isValid: false };
   } else {
-    console.log('isValid: true',);
     return { isValid: true };
   }
 }
