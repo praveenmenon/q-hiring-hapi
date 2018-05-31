@@ -1,9 +1,6 @@
 'use strict';
 const models = require('../models');
 const jwt = require('jsonwebtoken');
-const redis = require('redis');
-const client = redis.createClient();
-require('bluebird').promisifyAll(redis.RedisClient.prototype);
 const privateKey = 'BbZJjyoXAdr8BUZuiKKARWimKfrSmQ6fv8kZ7OFfc';
 
 exports.createUser = (req, res) =>{
