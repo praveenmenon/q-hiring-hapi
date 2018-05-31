@@ -18,15 +18,7 @@ exports.createUser = (req, res) =>{
       userRole: 'user'
     };
     return models.user.create(userInfo).then((userInfo) => {
-      const session = {
-        valid: true, // this will be set to false when the person logs out
-        authToken: jwt.sign({ email: req.payload.email }, privateKey), // a random session id
-        email: req.payload.email,
-        userId: userInfo.id,
-        exp: new Date().getTime() + 30 * 60 * 1000 // expires in 70 minutes time
-      }
-      client.set(session.email, JSON.stringify(session));
-      return userInfo.createSession({ authToken: session.authToken}).then((userSession) => {
+      return userInfo.createSession({ authToken: jwt.sign({ email: req.payload.email }, privateKey)}).then((userSession) => {
         return { message: 'You have successfully signed up.', user: userInfo, session: userSession };
       }).catch((err) => {
         return { error: err };
