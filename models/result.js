@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Result.associate = function(models) {
     // associations can be defined here
+    Result.hasOne(models.feedback, { foreignKey: 'resultId' });
     Result.belongsTo(models.user, {
       foreignKey: {
         name: 'userId',

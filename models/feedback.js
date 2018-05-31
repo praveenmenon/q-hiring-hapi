@@ -17,6 +17,13 @@ module.exports = (sequelize, DataTypes) => {
       },
       onDelete: 'CASCADE'
     });
+    Feedback.belongsTo(models.result, {
+      foreignKey: {
+        name: 'resultId',
+        allowNull: false
+      },
+      onDelete: 'CASCADE'
+    });
   };
   return Feedback;
 };

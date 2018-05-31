@@ -1,6 +1,8 @@
 'use strict';
 const Hapi = require('hapi');
 const routes = require('./config/routes');
+const redis = require('redis');
+const client = redis.createClient();
 
 const validate = async (decode, request) => {
   if(!decode.email) {
@@ -29,7 +31,18 @@ const init = async () => {
 
   server.route(routes);
   await server.start();
-	console.log('Server running at ' + server.info.uri);
+  console.log('Server running at ' + server.info.uri);
+  
+  // Redis 
+  client.set('redis', 'working');
+  client.get('redis', function (rediserror, reply) {
+    /* istanbul ignore if */
+    if (rediserror) {
+      console.log(rediserror);
+    }
+    console.log('redis is ' + reply.toString()); // confirm we can access redis
+  });
+  
   return server;
 };
 

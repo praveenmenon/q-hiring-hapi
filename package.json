@@ -26,8 +26,10 @@
     "hapi-cors-headers": "^1.0.3",
     "joi": "^13.3.0",
     "jsonwebtoken": "^8.2.1",
+    "moment": "^2.22.1",
     "nodemon": "^1.17.4",
     "pg": "^7.4.3",
+    "redis": "^2.8.0",
     "sequelize": "^4.37.8"
   }
 }

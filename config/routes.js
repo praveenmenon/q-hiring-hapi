@@ -115,6 +115,15 @@ const resultRoutes = [{
     cors: corsHeader
   },
   handler: resultsController.saveResults
+},
+{
+  path: '/users',
+  method: 'GET',
+  config: {
+    auth: 'jwt',
+    cors: corsHeader
+  },
+  handler: resultsController.getResults
 }]
 
 const feedbackRoutes = [{
