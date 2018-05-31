@@ -64,8 +64,7 @@ const userRoutes = [{
       validate: {
         payload: {
           email: Joi.string().required().email(),
-          password: Joi.any().required(),
-          sessionkey: Joi.any().required()
+          password: Joi.any().required()
         },
         failAction: async (request, h, err) => {
           throw err;
