@@ -8,7 +8,7 @@ exports.createSession = (req, res) => {
     if (!user.validPassword(req.payload.password)) {
       return { error: 'invalid password' }
     } else {
-      return user.createSession({ authToken: jwt.sign({ email: req.payload.email }, privateKey)}).then((userSession) => {
+      return user.createSession({ authToken: jwt.sign({ email: req.payload.email }, privateKey, { expiresIn: '60m' })}).then((userSession) => {
         return { message: 'You have successfully signed up.', user: user, session: userSession };
       }).catch((err) => {
         return { error: err };

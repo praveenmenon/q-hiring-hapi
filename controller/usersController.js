@@ -18,7 +18,7 @@ exports.createUser = (req, res) =>{
       userRole: 'user'
     };
     return models.user.create(userInfo).then((userInfo) => {
-      return userInfo.createSession({ authToken: jwt.sign({ email: req.payload.email }, privateKey)}).then((userSession) => {
+      return userInfo.createSession({ authToken: jwt.sign({ email: req.payload.email }, privateKey, { expiresIn: '60m'})}).then((userSession) => {
         return { message: 'You have successfully signed up.', user: userInfo, session: userSession };
       }).catch((err) => {
         return { error: err };
