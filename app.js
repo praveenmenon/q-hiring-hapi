@@ -1,12 +1,28 @@
 'use strict';
 const Hapi = require('hapi');
+const models = require('./models');
 const routes = require('./config/routes');
 
 const validate = async (decode, request) => {
   if(!decode.email) {
     return { isValid: false };
   } else {
-    return { isValid: true };
+    const promise = new Promise((resolve, reject) => {
+      models.user.findOne({
+        where: { email: decode.email }
+      }).then((userData) => {
+        userData.getSession({ raw: true }).then((sessionData) => {
+          if (sessionData.length === 0) resolve({ isValid: false });
+          sessionData.forEach((session, index, array) => {
+            if (session.authToken === request.headers.authorization) resolve( { isValid: true } );
+            if (array.length === index + 1) resolve( { isValid: false } );
+          });
+        }).catch((err) => {
+          reject({ message: 'error in authorizing token', error: err });
+        });
+      });
+    });
+    return promise    
   }
 }
 
