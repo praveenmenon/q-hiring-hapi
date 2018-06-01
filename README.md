@@ -39,9 +39,10 @@ To run the seed data - `$ sequelize db:seed all`
 
 ### Registration
 
-`http://localhost:3001/register`
+  `http://localhost:3001/register`
 
-Request ### POST
+  Request 
+  ### POST
 
 ```
 {
@@ -63,7 +64,8 @@ Request ### POST
 
   `http://localhost:3001/login`
 
-  Request ### POST
+  Request 
+  ### POST
 
 ```
 {
@@ -76,14 +78,18 @@ Request ### POST
 
   `http://localhost:3001/instruction`
 
-  Request ### GET
+  Request 
+  ### GET
+  
   Send Authorization and Email in headers
 
 ### SUBMIT SECTION RESULTS
 
   `http://localhost:3001/results`
 
-  Request ### GET
+  Request 
+  ### GET
+  
   Send Authorization and Email in headers
 
 ```
@@ -130,7 +136,10 @@ Request ### POST
 
 `http://localhost:4200/assets/feedback`
 
-Request ### POST
+Request 
+### POST
+
+Send Authorization and Email in headers
 
 ```
 {
@@ -174,12 +183,16 @@ Request ### POST
 
   `http://localhost:3001/logout/{user_id}`
 
-  Request ### DELETE
+  Request 
+  ### DELETE
+  
   Send Authorization and Email in headers
 
 ### GET USER DETAILS FOR ADMIN
 
   `http://localhost:3001/users`
 
-  Request ### DELETE
+  Request 
+  ### DELETE
+  
   Send Authorization and Email in headers
