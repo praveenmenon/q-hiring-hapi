@@ -187,6 +187,6 @@ To run the seed data - `$ sequelize db:seed all`
 
   `http://localhost:3001/users`
 
-  #### Request: DELETE
+  #### Request: GET
   
   Send Authorization and Email in headers
