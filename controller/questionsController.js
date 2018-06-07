@@ -24,7 +24,8 @@ exports.getQuestions = (req, res) => {
             exam['logical'][index]['options'] = [element.option_1, element.option_2, element.option_3, element.option_4];
             delete exam['logical'][index].option_1; delete exam['logical'][index].option_2; delete exam['logical'][index].option_3; delete exam['logical'][index].option_4; 
           });
-          return { message: 'successfully fetched all questions', exam: exam }        
+          if (exam['verbal'].length === 0 || exam['quantitative'].length === 0 || exam['logical'].length === 0) return res.response().code(204)
+            return res.response({ message: 'successfully fetched all questions', exam: exam }).code(200)
         }).catch((err) => {
           console.log('error in logical section:', err);
           return { message: 'error in logical section', error: err }

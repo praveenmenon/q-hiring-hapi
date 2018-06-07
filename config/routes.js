@@ -17,10 +17,11 @@ const welcomeRoute = [{
 		path: '/',
     method: 'GET',
     config: {
-      cors: corsHeader
+      cors: corsHeader,
+      auth: false
     },
 		handler: (request, reply) => {
-				return 'Welcome to Q Hiring';
+				return { message: 'Welcome to Q Hiring' };
 		}
 }];
 
