@@ -66,7 +66,7 @@ feedBackController.runTest = () => {
 				sessionDetails = await sessionHelper.signMeIn(user);
 				var token = sessionDetails.session.authToken;
 				return server.inject({
-					method: 'POST',
+					method: 'POST', 
 					url: '/feedback',
 					headers: {
 						Email: "test123@qwinix.io",
