@@ -188,7 +188,18 @@ const feedbackRoutes = [{
         'Authorization': Joi.string().required().description('Authentication token is must to varify you'),
         'Email': Joi.string().required().email().description('Email is also must to varify you')
       }).unknown(),
-    }
+      payload: {
+        email: Joi.string().required().email(),
+        overall: Joi.number().required(),
+        verbal: Joi.number().required(),
+        logical: Joi.number().required(),
+        quantitative: Joi.number().required(),
+        description: Joi.string()
+      },
+      failAction: async (request, h, err) => {
+          throw err;
+      }
+    },
   },
   handler: feedbackController.saveFeedback
 }]

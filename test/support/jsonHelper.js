@@ -139,4 +139,24 @@ jsonHelper.verbalAnswers = {
     ]
   }
 }
+
+jsonHelper.feedBack = {
+  "success": {
+    "email": "test@qwinix.io",
+    "overall": 4,
+    "verbal": 3,
+    "logical": 3,
+    "quantitative": 2,
+    "description": "Not such!"
+  },
+  "invalid_input": {
+    "email": "test@qwinix.io",
+    "overall": 4,
+    "verbal": 3,
+    "logical": 3,
+    "quantitative": "",
+    "description": "Not such!"
+  }
+}
+
 module.exports = jsonHelper;
