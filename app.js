@@ -1,10 +1,14 @@
 'use strict';
 const Hapi = require('hapi');
+const Inert = require('inert');
+const Vision = require('vision');
+const HapiSwagger = require('hapi-swagger');
+const Pack = require('./package');
 const models = require('./models');
 const routes = require('./config/routes');
 
 const validate = async (decode, request) => {
-  if(!decode.email) {
+  if (!decode.email) {
     return { isValid: false };
   } else {
     const promise = new Promise((resolve, reject) => {
@@ -14,28 +18,49 @@ const validate = async (decode, request) => {
         userData.getSession({ raw: true }).then((sessionData) => {
           if (sessionData.length === 0) resolve({ isValid: false });
           sessionData.forEach((session, index, array) => {
-            if (session.authToken === request.headers.authorization) resolve( { isValid: true } );
-            if (array.length === index + 1) resolve( { isValid: false } );
+            if (session.authToken === request.headers.authorization) resolve({ isValid: true });
+            if (array.length === index + 1) resolve({ isValid: false });
           });
         }).catch((err) => {
-          reject( { isValid: false } );
+          reject({ isValid: false });
         });
       }).catch((err) => {
-        reject( { isValid: false } );
+        reject({ isValid: false });
       });
     });
-    return promise    
+    return promise
   }
 }
 
 const server = Hapi.server({
-	host: 'localhost',
-  port: 3001
+  host: 'localhost',
+  port: 9009
 });
+
+const swaggerOptions = {
+  info: {
+    title: 'Q-Hiring API Documentation',
+    version: Pack.version,
+    description: "Take a test and be qwinixian!!",
+    contact: {
+      name: "qwinix",
+      email: "contactme@qwinix.io",
+      url: "https://www.qwinix.io/"
+    }
+  },
+};
 
 const init = async () => {
   // include our module here ↓↓
-  await server.register(require('hapi-auth-jwt2'));
+  await server.register([
+    Inert,
+    Vision,
+    {
+      plugin: HapiSwagger,
+      options: swaggerOptions
+    },
+    require('hapi-auth-jwt2')
+  ]);
 
   server.auth.strategy('jwt', 'jwt', {
     key: 'BbZJjyoXAdr8BUZuiKKARWimKfrSmQ6fv8kZ7OFfc', // Never Share your secret key
