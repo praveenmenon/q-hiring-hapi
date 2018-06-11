@@ -19,7 +19,7 @@ exports.createUser = (req, res) =>{
     };
     return models.user.create(userInfo).then((userInfo) => {
       return userInfo.createSession({ authToken: jwt.sign({ email: req.payload.email }, privateKey, { expiresIn: '60m'})}).then((userSession) => {
-        return { message: 'You have successfully signed up.', user: userInfo, session: userSession };
+        return { message: 'You have successfully signed up.', user: userInfo, session: userSession, status: 200};
       }).catch((err) => {
         return { error: err };
       });
@@ -28,4 +28,3 @@ exports.createUser = (req, res) =>{
       return { error: 'User not created'};
     });
 };
-

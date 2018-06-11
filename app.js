@@ -18,8 +18,10 @@ const validate = async (decode, request) => {
             if (array.length === index + 1) resolve( { isValid: false } );
           });
         }).catch((err) => {
-          reject({ message: 'error in authorizing token', error: err });
+          reject( { isValid: false } );
         });
+      }).catch((err) => {
+        reject( { isValid: false } );
       });
     });
     return promise    
