@@ -131,7 +131,20 @@ const feedbackRoutes = [{
   method: 'POST',
   config: {
     auth: 'jwt',
-    cors: corsHeader
+    cors: corsHeader,
+    validate: {
+      payload: {
+        email: Joi.string().required().email(),
+        overall: Joi.number().required(),
+        verbal: Joi.number().required(),
+        logical: Joi.number().required(),
+        quantitative: Joi.number().required(),
+        description: Joi.string()
+      },
+      failAction: async (request, h, err) => {
+          throw err;
+      }
+    },
   },
   handler: feedbackController.saveFeedback
 }]

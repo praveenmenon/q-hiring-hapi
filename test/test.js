@@ -8,7 +8,7 @@ const sessionsController = require('./controllers/sessionsController');
 const questionsController = require('./controllers/questionsController');
 const examsController = require('./controllers/examsController');
 const resultsController = require('./controllers/resultsController');
-
+const feedBackController = require('./controllers/feedBackController');
 
 describe('Server testing', () => {
   it('validate if server is running', () => {
@@ -27,3 +27,4 @@ sessionsController.runTest();
 questionsController.runTest();
 examsController.runTest();
 resultsController.runTest();
+feedBackController.runTest();
