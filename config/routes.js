@@ -90,8 +90,8 @@ const userRoutes = [{
     validate: {
       headers:
       Joi.object({
-        'Authorization': Joi.string().required().description('Authentication token is must to varify you'),
-        'Email': Joi.string().required().email().description('Email is also must to varify you')
+        'authorization': Joi.string().required().description('Authentication token is must to varify you'),
+        'email': Joi.string().required().email().description('Email is must to varify you')
       }).unknown(),
     }
   },
@@ -110,8 +110,8 @@ const questionRoutes = [{
     validate: {
       headers:
       Joi.object({
-        'Authorization': Joi.string().required().description('Authentication token is must to varify you'),
-        'Email': Joi.string().required().email().description('Email is also must to varify you')
+        'authorization': Joi.string().required().description('Authentication token is must to varify you'),
+        'email': Joi.string().required().description('Email is must to varify you')
       }).unknown(),
     }
   },
@@ -129,8 +129,8 @@ const examRoutes = [{
     validate: {
       headers:
       Joi.object({
-        'Authorization': Joi.string().required().description('Authentication token is must to varify you'),
-        'Email': Joi.string().required().email().description('Email is also must to varify you')
+        'authorization': Joi.string().required().description('Authentication token is must to varify you'),
+        'email': Joi.string().required().email().description('Email is must to varify you')
       }).unknown(),
     }
   },
@@ -148,8 +148,8 @@ const resultRoutes = [{
     validate: {
       headers:
       Joi.object({
-        'Authorization': Joi.string().required().description('Authentication token is must to varify you'),
-        'Email': Joi.string().required().email().description('Email is also must to varify you')
+        'authorization': Joi.string().required().description('Authentication token is must to varify you'),
+        'email': Joi.string().required().email().description('Email is must to varify you')
       }).unknown(),
     }
   },
@@ -166,8 +166,8 @@ const resultRoutes = [{
     validate: {
       headers:
       Joi.object({
-        'Authorization': Joi.string().required().description('Authentication token is must to varify you'),
-        'Email': Joi.string().required().email().description('Email is also must to varify you')
+        'authorization': Joi.string().required().description('Authentication token is must to varify you'),
+        'email': Joi.string().required().email().description('Email is must to varify you')
       }).unknown(),
     }
   },
@@ -185,8 +185,8 @@ const feedbackRoutes = [{
     validate: {
       headers:
       Joi.object({
-        'Authorization': Joi.string().required().description('Authentication token is must to varify you'),
-        'Email': Joi.string().required().email().description('Email is also must to varify you')
+        'authorization': Joi.string().required().description('Authentication token is must to varify you'),
+        'email': Joi.string().required().email().description('Email is must to varify you')
       }).unknown(),
       payload: {
         email: Joi.string().required().email(),
