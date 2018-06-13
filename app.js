@@ -15,7 +15,7 @@ const validate = async (decode, request) => {
       models.user.findOne({
         where: { email: decode.email }
       }).then((userData) => {
-        userData.getSession({ raw: true }).then((sessionData) => {
+       return userData.getSession({ raw: true }).then((sessionData) => {
           if (sessionData.length === 0) resolve({ isValid: false });
           sessionData.forEach((session, index, array) => {
             if (session.authToken === request.headers.authorization) resolve({ isValid: true });
@@ -34,7 +34,7 @@ const validate = async (decode, request) => {
 
 const server = Hapi.server({
   host: 'localhost',
-  port: 9009
+  port: 3001
 });
 
 const swaggerOptions = {
