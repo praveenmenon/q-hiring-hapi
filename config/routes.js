@@ -139,7 +139,7 @@ const feedbackRoutes = [{
 
 const authRoutes = [{
   path: '/auth',
-  method: 'GET',
+  method: 'POST',
   config: {
     auth: false,
     cors: corsHeader
