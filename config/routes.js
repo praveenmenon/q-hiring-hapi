@@ -6,6 +6,7 @@ const examsController = require('../controller/examsController')
 const questionsController = require('../controller/questionsController')
 const resultsController = require('../controller/resultsController')
 const feedbackController = require('../controller/feedbackController')
+const authController = require('../controller/authController')
 
 const corsHeader = {
   origin: ['*'],
