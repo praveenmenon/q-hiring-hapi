@@ -139,7 +139,7 @@ const feedbackRoutes = [{
 
 const authRoutes = [{
   path: '/auth',
-  method: 'POST',
+  method: 'GET',
   config: {
     auth: false,
     cors: corsHeader
@@ -147,4 +147,4 @@ const authRoutes = [{
   handler: authController.checkToken
 }]
 
-module.exports = [].concat(welcomeRoute, userRoutes, examRoutes, questionRoutes, resultRoutes, feedbackRoutes);
+module.exports = [].concat(welcomeRoute, userRoutes, examRoutes, questionRoutes, resultRoutes, feedbackRoutes, authRoutes);
