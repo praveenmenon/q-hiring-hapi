@@ -136,4 +136,14 @@ const feedbackRoutes = [{
   handler: feedbackController.saveFeedback
 }]
 
+const authRoutes = [{
+  path: '/auth',
+  method: 'POST',
+  config: {
+    auth: false,
+    cors: corsHeader
+  },
+  handler: authController.checkToken
+}]
+
 module.exports = [].concat(welcomeRoute, userRoutes, examRoutes, questionRoutes, resultRoutes, feedbackRoutes);
