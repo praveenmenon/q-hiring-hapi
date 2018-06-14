@@ -190,3 +190,11 @@ To run the seed data - `$ sequelize db:seed all`
   #### Request: GET
   
   Send Authorization and Email in headers
+
+### SWAGGER
+
+ `http://localhost:3001/documentation`
+
+ Reference: 
+
+  `https://www.npmjs.com/package/hapi-swagger`
