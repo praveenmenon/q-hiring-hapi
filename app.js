@@ -22,7 +22,7 @@ const validate = async (decode, request) => {
         });
       });
     });
-    return promise    
+    return promise
   }
 }
 

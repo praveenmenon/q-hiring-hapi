@@ -71,7 +71,7 @@ const userRoutes = [{
         }
       }
     },
-    handler: sessionsController.createSession    
+    handler: sessionsController.createSession
   },
   {
     method: "DELETE",
@@ -94,6 +94,14 @@ const questionRoutes = [{
     cors: corsHeader
   },
   handler: questionsController.getQuestions
+},{
+  path: '/allQuestions',
+  method: 'GET',
+  config: {
+    auth: 'jwt',
+    cors: corsHeader
+  },
+  handler: questionsController.allQuestions
 }]
 
 const examRoutes = [{

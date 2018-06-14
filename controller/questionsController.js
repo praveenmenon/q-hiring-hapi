@@ -10,21 +10,21 @@ exports.getQuestions = (req, res) => {
       exam['verbal'] = verbal;
       verbal.forEach((element, index) => {
         exam['verbal'][index]['options'] = [element.option_1, element.option_2, element.option_3, element.option_4];
-        delete exam['verbal'][index].option_1; delete exam['verbal'][index].option_2; delete exam['verbal'][index].option_3; delete exam['verbal'][index].option_4; 
+        delete exam['verbal'][index].option_1; delete exam['verbal'][index].option_2; delete exam['verbal'][index].option_3; delete exam['verbal'][index].option_4;
       });
       return model.question.findAll({ raw: true, attributes: { exclude: ['answer', 'createdAt', 'updatedAt', 'section_id'] }, where: { section_id: 3 }, order: [Sequelize.fn('RANDOM')], limit: 5 }).then((quantitative) => {
         exam['quantitative'] = quantitative;
         quantitative.forEach((element, index) => {
           exam['quantitative'][index]['options'] = [element.option_1, element.option_2, element.option_3, element.option_4];
-          delete exam['quantitative'][index].option_1; delete exam['quantitative'][index].option_2; delete exam['quantitative'][index].option_3; delete exam['quantitative'][index].option_4; 
+          delete exam['quantitative'][index].option_1; delete exam['quantitative'][index].option_2; delete exam['quantitative'][index].option_3; delete exam['quantitative'][index].option_4;
         });
         return model.question.findAll({ raw: true, attributes: { exclude: ['answer', 'createdAt', 'updatedAt', 'section_id'] }, where: { section_id: 2 }, order: [Sequelize.fn('RANDOM')], limit: 5 }).then((logical) => {
           exam['logical'] = logical;
           logical.forEach((element, index) => {
             exam['logical'][index]['options'] = [element.option_1, element.option_2, element.option_3, element.option_4];
-            delete exam['logical'][index].option_1; delete exam['logical'][index].option_2; delete exam['logical'][index].option_3; delete exam['logical'][index].option_4; 
+            delete exam['logical'][index].option_1; delete exam['logical'][index].option_2; delete exam['logical'][index].option_3; delete exam['logical'][index].option_4;
           });
-          return { message: 'successfully fetched all questions', exam: exam }        
+          return { message: 'successfully fetched all questions', exam: exam }
         }).catch((err) => {
           console.log('error in logical section:', err);
           return { message: 'error in logical section', error: err }
@@ -39,5 +39,19 @@ exports.getQuestions = (req, res) => {
     });
   }).catch((err) => {
     return {message: 'User does not exist', }
+  })
+}
+
+exports.create = (req, res) => {
+  return authentication.validateUser(req).then((userExist) => {
+
+  });
+}
+
+exports.allQuestions = (req, resp) => {
+  return model.question.findAll({ raw: true, attributes: { exclude: ['createdAt', 'updatedAt'] }}).then((questions) => {
+    return resp.response({ message: "All questions listed successfully.", data: questions}).code(200)
+  }).catch((error) => {
+    return resp.response({ error: error}).code(422)
   })
 }
