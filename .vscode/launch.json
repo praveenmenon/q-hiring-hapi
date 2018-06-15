@@ -9,23 +9,6 @@
       "request": "attach",
       "name": "Attach by Process ID",
       "processId": "${command:PickProcess}"
-    },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "nodemon",
-      "port": 9229,
-      "runtimeExecutable": "nodemon",
-      "program": "${workspaceFolder}/app.js",
-      "restart": true,
-      "console": "integratedTerminal",
-      "internalConsoleOptions": "neverOpen"
-    },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "Launch Program",
-      "program": "${workspaceFolder}/app.js",
     }
   ]
 }

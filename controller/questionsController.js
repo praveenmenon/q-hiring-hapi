@@ -54,10 +54,10 @@ exports.createQuestion = (req, res) => {
   }
   return model.question.create(question)
   .then((successResponse)=>{
-
+    return resp.response({ message: "Question added successfully" }).code(200)
   })
   .catch((error)=>{
-
+    return resp.response({ error: error }).code(422)
   })
 }
 
