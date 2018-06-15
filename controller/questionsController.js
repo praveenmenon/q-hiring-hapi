@@ -52,13 +52,13 @@ exports.createQuestion = (req, res) => {
     answer: req.payload.answer,
     section_id: req.payload.section_id
   }
-  // return model.question.create(question)
-  // .then((successResponse)=>{
+  return model.question.create(question)
+  .then((successResponse)=>{
 
-  // })
-  // .catch((error)=>{
+  })
+  .catch((error)=>{
 
-  // })
+  })
 }
 
 exports.allQuestions = (req, resp) => {

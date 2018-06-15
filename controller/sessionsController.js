@@ -9,7 +9,7 @@ exports.createSession = (req, res) => {
       return { error: 'invalid password' }
     } else {
       return user.createSession({ authToken: jwt.sign({ email: req.payload.email }, privateKey, { expiresIn: '60m' })}).then((userSession) => {
-        return { message: 'You have successfully signed up.', user: user, session: userSession };
+        return { message: 'You have successfully loggedIn.', user: user, session: userSession };
       }).catch((err) => {
         return { error: err };
       });
