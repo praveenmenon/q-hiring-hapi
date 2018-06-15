@@ -19,9 +19,5 @@
     "database": "q-hiring-hapi-production",
     "host": "127.0.0.1",
     "dialect": "postgres"
-  },
-  "define": {
-    "createdAt": "createdat",
-    "updatedAt": "updatedat"
   }
 }
