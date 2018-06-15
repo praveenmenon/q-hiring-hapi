@@ -1,5 +1,5 @@
 'use strict';
-const models = require('../models');
+// const models = require('../models');
 const authentication = require('../modules/authenticate')
 
 exports.saveFeedback = (req, res) =>{
@@ -12,11 +12,11 @@ exports.saveFeedback = (req, res) =>{
     description: req.payload.description
   }
   return authentication.validateUser(req).then((userExist) => {
-    return models.feedback.create(feedbackInfo).then((feedbackInfo) => {
-      return { message: 'Feedback submitted successfully.' };
-    }).catch((err) => {
-      return { error: 'Error in submitting feedback' };
-    });
+    // return models.feedback.create(feedbackInfo).then((feedbackInfo) => {
+    //   return { message: 'Feedback submitted successfully.' };
+    // }).catch((err) => {
+    //   return { error: 'Error in submitting feedback' };
+    // });
   }).catch((err) => {
     return { message: 'User does not exist', }
   })
