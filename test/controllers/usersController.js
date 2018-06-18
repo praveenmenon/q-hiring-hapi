@@ -13,15 +13,15 @@ chai.use(chaiJsonEqual);
 
 usersController.runTest = () => {
   describe('users controller', () => {
-    // drop users table 
+    // drop users table
     before((done) => {
       models.user.sync({ force: true }).then(() => {
         done(null);
-      }).catch((err) => { 
-        done(error);
+      }).catch((err) => {
+        done(err);
       });
     });
-    
+
     describe('register user', () => {
       it('should not create user if invalid params', () => {
         return server.inject({

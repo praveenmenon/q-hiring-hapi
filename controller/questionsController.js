@@ -43,7 +43,7 @@ exports.getQuestions = (req, res) => {
   })
 }
 
-exports.createQuestion = (req, res) => {
+exports.createQuestion = (req, resp) => {
   const question = {
     title: req.payload.title,
     option_1: req.payload.option_1,
