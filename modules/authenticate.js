@@ -9,6 +9,6 @@ authentication.validateUser = (req) => {
   }).catch((error) => {
     return false
   });
-} 
+}
 
 module.exports = authentication;

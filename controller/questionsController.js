@@ -44,28 +44,44 @@ exports.getQuestions = (req, res) => {
 }
 
 exports.createQuestion = (req, resp) => {
-  const question = {
-    title: req.payload.title,
-    option_1: req.payload.option_1,
-    option_2: req.payload.option_2,
-    option_3: req.payload.option_3,
-    option_4: req.payload.option_4,
-    answer: req.payload.answer,
-    section_id: req.payload.section_id
-  }
-  return model.question.create(question)
-  .then((successResponse)=>{
-    return resp.response({ message: "Question added successfully" }).code(200)
-  })
-  .catch((error)=>{
-    return resp.response({ error: error }).code(422)
+  return authentication.validateUser(req).then((userExist) => {
+    if (userExist.userRole != 'admin') {
+      return resp.response({ message: 'You are not authorized to access the page!!' }).code(422)
+    } else {
+      const question = {
+        title: req.payload.title,
+        option_1: req.payload.option_1,
+        option_2: req.payload.option_2,
+        option_3: req.payload.option_3,
+        option_4: req.payload.option_4,
+        answer: req.payload.answer,
+        section_id: req.payload.section_id
+      }
+      return model.question.create(question)
+        .then((successResponse) => {
+          return resp.response({ message: "Question added successfully" }).code(200)
+        })
+        .catch((error) => {
+          return resp.response({ error: error }).code(422)
+        })
+    }
+  }).catch((err) => {
+    return { message: 'User does not exist', }
   })
 }
 
 exports.allQuestions = (req, resp) => {
-  return model.question.findAll({ raw: true, attributes: { exclude: ['createdAt', 'updatedAt'] }}).then((questions) => {
-    return resp.response({ message: "All questions listed successfully.", data: questions}).code(200)
-  }).catch((error) => {
-    return resp.response({ error: error}).code(422)
+  return authentication.validateUser(req).then((userExist) => {
+    if (userExist.userRole != 'admin') {
+      return resp.response({ message: 'You are not authorized to access the page!!'}).code(422)
+    } else {
+      return model.question.findAll({ raw: true, attributes: { exclude: ['createdAt', 'updatedAt'] } }).then((questions) => {
+        return resp.response({ message: "All questions listed successfully.", data: questions }).code(200)
+      }).catch((error) => {
+        return resp.response({ error: error }).code(422)
+      })
+    }
+  }).catch((err) => {
+    return { message: 'User does not exist', }
   })
 }
