@@ -4,7 +4,6 @@ const assert = chai.assert;
 const should = chai.should();
 const factory = require('factory-girl').factory;
 const questionsFactory = require('../factories/questions').questionsFactory();
-const usersFactory = require('../factories/users').usersFactory();
 const sessionHelper = require("../support/sessionHelper");
 const server = require('../../app.js');
 const models = require('../../models');
