@@ -116,6 +116,22 @@ const questionRoutes = [{
     }
   },
   handler: questionsController.getQuestions
+},{
+  path: '/allQuestions',
+  method: 'GET',
+  config: {
+    auth: 'jwt',
+    cors: corsHeader
+  },
+  handler: questionsController.allQuestions
+},{
+  path: '/createQuestion',
+  method: 'POST',
+  config: {
+    auth: 'jwt',
+    cors: corsHeader
+  },
+  handler: questionsController.createQuestion
 }]
 
 const examRoutes = [{
