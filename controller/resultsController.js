@@ -96,7 +96,7 @@ const createResult = (result) => {
 const getQuestion = (element) => {
   return axios({
     method: 'get',
-    url: `http://localhost:3002/findOneQuestion/${element.id}`
+    url: `${abstractionRootUrl}getQuestion/${element.id}`
   }).then(function (response) {
     return response
   }).catch((error) => {
