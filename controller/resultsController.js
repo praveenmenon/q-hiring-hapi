@@ -25,15 +25,15 @@ exports.saveResults = (req, res) => {
               if (examResults.section_number === 1) {
                 return axios({
                   method: 'post',
-                  url: 'http://localhost:3002/results',
+                  url: `http://localhost:3002/results`,
                   data: {
                     userId: examResults.user_id,
                     section_1: score
                   }
                 }).then(function (response) {
                   console.log("response ===== ", response)
-                }).catch(() => {
-
+                }).catch((error) => {
+                  console.log("error ===== ", error)
                 })
                 // model.result.create({ userId: examResults.user_id, section_1: score }).then((resultInfo) => {
                 //   resolve({ message: 'score successfully added', resultId: resultInfo.id });
