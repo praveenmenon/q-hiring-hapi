@@ -3,6 +3,7 @@ const model = require('../models');
 const moment = require('moment');
 const async = require("async");
 const axios = require('axios');
+const abstractionRootUrl = require('../abstractionUrl');
 
 const authentication = require('../modules/authenticate')
 
@@ -14,80 +15,104 @@ exports.saveResults = (req, res) => {
   const promise = new Promise((resolve, reject) => {
     examResults.answers.forEach((element, index, array) => {
       return authentication.validateUser(req).then((userExist) => {
-        return axios({
-          method: 'get',
-          url: `http://localhost:3002/findOneQuestion/${element.id}`
-        }).then(function (response) {
-          if (response.data.status) {
+        return getQuestion(element).then(function (response) {
+          if (response.status === 200) {
             if (response.data.question.answer === element.user_answer) score += 1;
-            itemsProcessed ++;
+            itemsProcessed++;
             if (itemsProcessed === array.length) {
+              const result = {
+                userId: examResults.user_id,
+                section1: null,
+                section2: null,
+                section3: null,
+                total_score: null
+              }
               if (examResults.section_number === 1) {
-                return axios({
-                  method: 'post',
-                  url: `http://localhost:3002/results`,
-                  data: {
-                    userId: examResults.user_id,
-                    section_1: score
-                  }
-                }).then(function (response) {
-                  console.log("response ===== ", response)
-                }).catch((error) => {
-                  console.log("error ===== ", error)
+                result.section1 = score;
+                return createResult(result).then(function(response){
+                  resolve({ message: response.message, resultId: response.resultId });
                 })
-                // model.result.create({ userId: examResults.user_id, section_1: score }).then((resultInfo) => {
-                //   resolve({ message: 'score successfully added', resultId: resultInfo.id });
-                // }).catch((err) => {
-                //   console.log('error:', err)
-                //   reject({ message: 'error in saving score', error: 'err' });
-                // });
               } else if (examResults.section_number === 2) {
-                // model.result.update({ section_2: score }, { where: { id: examResults.resultId } }).then((resultUpdateInfo) => {
-                //   resolve({ message: 'score successfully added' });
-                // }).catch((err) => {
-                //   reject({ message: 'error in saving score', error: err });
-                // });
+                result.section2 = score;
+                return updateResult(examResults.resultId, result).then(function(response){
+                  resolve({ message: response.message, resultId: response.resultId });
+                })
               } else {
-                // model.result.findOne({ raw: true, where: { id: examResults.resultId } }).then((result) => {
-                //   totalScore = result.section_1 + result.section_2 + score;
-                //   model.result.update({ section_3: score, total_score: totalScore }, { where: { id: examResults.resultId } }).then((resultUpdateInfo) => {
-                //     resolve({ message: 'score successfully added' });
-                //   }).catch((err) => {
-                //     reject({ message: 'error in saving score', error: err });
-                //   });
-                // });
+                return getResult(examResults.resultId).then(function (response) {
+                  if (response.status === 200) {
+                    result.section3 = score;
+                    result.total_score = response.data.result.section_1 + response.data.result.section_2;
+                    return updateResult(response.data.result.id, result).then(function(response){
+                      resolve({ message: response.message, resultId: response.resultId });
+                    })
+                  } else {
+                    resolve({ error: response.data.error });
+                  }
+                })
               }
             }
           } else {
-
+            resolve({ error: response.data.error });
           }
-          return response.data
-        }).catch((error) => {
-          // if (error.response) {
-          //   console.log(error.response.data);
-          //   console.log(error.response.status);
-          //   console.log(error.response.headers);
-          //   return error.response;
-          // } else if (error.request) {
-          //   console.log(error.request);
-          //   return error.request;
-          // } else {
-          //   console.log('Error', error.message);
-          //   return error.message;
-          // }
-          // return error.config;
-          // console.log(error.config);
-        });
+        })
       });
-
-      // model.question.findOne({ raw: true, where: { id: element.id } }).then((question) => {
-
-      // }).catch((err) => {
-      //   reject({ message: 'error in calculating score', error: err })
-      // });
     });
   })
   return promise
+}
+
+const updateResult = (resultId, result) => {
+  return axios({
+    method: 'put',
+    url: `${abstractionRootUrl}updateResult/${resultId}`,
+    data: result
+  }).then(function (response) {
+    if (response.status === 200) {
+      return({ message: response.data.message, resultId: resultId });
+    } else {
+      return({ error: response.data.error });
+    }
+  }).catch((error) => {
+    return({ error: response.data.error });
+  })
+}
+
+const createResult = (result) => {
+  return axios({
+    method: 'post',
+    url: `${abstractionRootUrl}createResult`,
+    data: result
+  }).then(function (response) {
+    if (response.status === 200) {
+      return({ message: response.data.message, resultId: response.data.resultId });
+    } else {
+      return({ error: response.data.error });
+    }
+  }).catch((error) => {
+    return({ error: error });
+  })
+}
+
+const getQuestion = (element) => {
+  return axios({
+    method: 'get',
+    url: `http://localhost:3002/findOneQuestion/${element.id}`
+  }).then(function (response) {
+    return response
+  }).catch((error) => {
+    return({ error: error });
+  });
+}
+
+const getResult = (resultId) => {
+  return axios({
+    method: 'get',
+    url: `${abstractionRootUrl}getResult/${resultId}`
+  }).then(function (response) {
+    return response
+  }).catch((error) => {
+    return({ error: error });
+  })
 }
 
 exports.getResults = (req, res) => {
