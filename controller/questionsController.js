@@ -31,3 +31,43 @@ exports.getQuestions = (req, res) => {
     });
   });
 };
+
+exports.createQuestion = (req, resp) => {
+  return authentication.validateUser(req).then((userExist) => {
+    if (userExist.userRole != 'admin') {
+      return resp.response({ message: 'You are not authorized to access the page!!' }).code(422)
+    } else {
+      const question = {
+        title: req.payload.title,
+        option_1: req.payload.option_1,
+        option_2: req.payload.option_2,
+        option_3: req.payload.option_3,
+        option_4: req.payload.option_4,
+        answer: req.payload.answer,
+        section_id: req.payload.section_id
+      }
+      return axios({
+        method: 'post',
+        url: 'http://localhost:3002/questions',
+        data: question
+      }).then(function (response) {
+        console.log('response:', response);
+        return response.data
+      }).catch((error) => {
+        if (error.response) {
+          return error.response;
+        } else if (error.request) {
+          console.log(error.request);
+          return error.request;
+        } else {
+          console.log('Error', error.message);
+          return error.message;
+        }
+        return error.config;
+        console.log(error.config);
+      });
+    }
+  }).catch((err) => {
+    return { message: 'User does not exist', }
+  })
+}
