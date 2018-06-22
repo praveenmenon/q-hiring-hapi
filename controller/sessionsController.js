@@ -20,7 +20,7 @@ exports.createSession = (req, res) => {
 }
 
 exports.deleteSession = (req, res) => {
-  return models.session.destroy({ where: {userId: req.params.id }}).then((sessionDetails) => {
+  return models.session.destroy({ where: { authToken: req.headers.authorization }}).then((sessionDetails) => {
     return { message: 'User logged out successfully!'}
   }).catch((err) => {
     return { error: 'Cannot logout the user'}

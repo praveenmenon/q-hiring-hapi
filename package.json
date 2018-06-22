@@ -20,6 +20,7 @@
   "homepage": "https://github.com/praveenmenon/q-hiring-hapi#readme",
   "dependencies": {
     "async": "^2.6.1",
+    "axios": "^0.18.0",
     "bcrypt": "^2.0.1",
     "crypto": "^1.0.1",
     "hapi": "^17.4.0",
