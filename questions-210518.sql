@@ -603,7 +603,7 @@ ALTER TABLE ONLY questions
 REVOKE ALL ON TABLE questions FROM PUBLIC;
 REVOKE ALL ON TABLE questions FROM postgres;
 GRANT ALL ON TABLE questions TO postgres;
-GRANT ALL ON TABLE questions TO deploy;
+GRANT ALL ON TABLE questions TO postgres;
 
 
 --

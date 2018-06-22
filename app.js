@@ -33,7 +33,7 @@ const validate = async (decode, request) => {
 }
 
 const server = Hapi.server({
-  host: '192.168.2.113',
+  host: 'localhost',
   // host: 'localhost',
   port: 3001
 });
