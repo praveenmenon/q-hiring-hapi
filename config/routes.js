@@ -116,7 +116,48 @@ const questionRoutes = [{
     }
   },
   handler: questionsController.getQuestions
-}]
+}, {
+    path: '/allQuestions',
+    method: 'GET',
+    config: {
+      auth: 'jwt',
+      cors: corsHeader,
+      tags: ['api'],
+      validate: {
+        headers:
+          Joi.object({
+            'authorization': Joi.string().required().description('Authentication token is must to varify you'),
+            'email': Joi.string().required().description('Email is must to varify you')
+          }).unknown(),
+      }
+    },
+    handler: questionsController.allQuestions
+  }, {
+    path: '/createQuestion',
+    method: 'POST',
+    config: {
+      auth: 'jwt',
+      cors: corsHeader,
+      tags: ['api'],
+      validate: {
+        payload: {
+          title: Joi.string().required(),
+          option_1: Joi.string().required(),
+          option_2: Joi.string().required(),
+          option_3: Joi.string().required(),
+          option_4: Joi.string().required(),
+          answer: Joi.string().required(),
+          section_id: Joi.any().required()
+        },
+        headers:
+          Joi.object({
+            'authorization': Joi.string().required().description('Authentication token is must to varify you'),
+            'email': Joi.string().required().description('Email is must to varify you')
+          }).unknown(),
+      }
+    },
+    handler: questionsController.createQuestion
+  }]
 
 const examRoutes = [{
   path: '/instruction',
