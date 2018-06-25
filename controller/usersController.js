@@ -24,7 +24,6 @@ exports.createUser = (req, res) =>{
         return { error: err };
       });
     }).catch((err) => {
-      if (err.name = 'SequelizeUniqueConstraintError') return { error: 'User already exist' };
-      return { error: 'User not created'};
+      return { error: err};
     });
 };

@@ -4,20 +4,26 @@
     "password": "password",
     "database": "q-hiring-hapi-development",
     "host": "127.0.0.1",
-    "dialect": "postgres"
+    "webhost":"localhost",
+    "dialect": "postgres",
+    "abstractionRootUrl": "http://localhost:3002/"
   },
   "test": {
     "username": "postgres",
     "password": "password",
     "database": "q-hiring-hapi-test",
     "host": "127.0.0.1",
-    "dialect": "postgres"
+    "webhost": "localhost",
+    "dialect": "postgres",
+    "abstractionRootUrl": "http://localhost:3002/"
   },
   "production": {
     "username": "postgres",
     "password": "password",
     "database": "q-hiring-hapi-production",
-    "host": "127.0.0.1",
-    "dialect": "postgres"
+    "host": "db",
+    "webhost": "0.0.0.0",
+    "dialect": "postgres",
+    "abstractionRootUrl": "http://q-hiring-abstraction:3002/"
   }
 }
