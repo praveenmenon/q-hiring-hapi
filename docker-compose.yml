@@ -1,21 +1,39 @@
 version: '2'
 services:
   db:
-    image: postgres:9.5
+    build: /home/ubuntu/projects/Q-hiring-abstraction/postgres_docker_config
     restart: always
+    ports:
+      - "5432:5432"
     environment:
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_PASSWORD: password
       POSTGRES_DB: postgres
       POSTGRES_USER: postgres
-  app:
-    build: .
-    command: npm start
+  q-hiring-hapi:
+    build: /home/ubuntu/projects/q-hiring-hapi
     volumes:
-      - ".:/q-hiring-hapi/"
+      - "/home/ubuntu/projects/q-hiring-hapi:/q-hiring-hapi/"
     ports:
       - "3001:3001"
     links:
       - db
+    depends_on:
+      - db
+    environment:
+      DB_USER: postgres
+      DB_NAME: postgres
+      DB_PASSWORD: password
+      DB_HOST: db
+  q-hiring-abstraction:
+    build: /home/ubuntu/projects/Q-hiring-abstraction
+    volumes:
+      - "/home/ubuntu/projects/Q-hiring-abstraction:/Q-hiring-abstraction/"
+    ports:
+    - "3002:3002"
+    links:
+    - db
+    depends_on:
+    - db
     environment:
       DB_USER: postgres
       DB_NAME: postgres

@@ -2,22 +2,22 @@
   "development": {
     "username": "postgres",
     "password": "password",
-    "database": "q-hiring-hapi-development",
+    "database": "qhiringhapidevelopment",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "test": {
     "username": "postgres",
     "password": "password",
-    "database": "q-hiring-hapi-test",
+    "database": "qhiringhapitest",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "production": {
     "username": "postgres",
     "password": "password",
-    "database": "q-hiring-hapi-production",
-    "host": "127.0.0.1",
+    "database": "qhiringhapiproduction",
+    "host": "db",
     "dialect": "postgres"
   }
 }
