@@ -6,6 +6,8 @@ const HapiSwagger = require('hapi-swagger');
 const Pack = require('./package');
 const models = require('./models');
 const routes = require('./config/routes');
+var env = process.env.NODE_ENV || 'development';
+var config = require('./config/config.json')[env];
 
 const validate = async (decode, request) => {
   if (!decode.email) {
@@ -34,7 +36,7 @@ const validate = async (decode, request) => {
 
 const server = Hapi.server({
   // host: '192.168.2.113',
-  host: 'localhost',
+  host: config.webhost,
   port: 3001
 });
 
