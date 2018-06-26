@@ -73,7 +73,7 @@ const updateResult = (resultId, result) => {
       return({ error: response.data.error });
     }
   }).catch((error) => {
-    return({ error: response.data.error });
+    return({ error: error });
   })
 }
 
