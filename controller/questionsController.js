@@ -4,13 +4,14 @@ const authentication = require('../modules/authenticate')
 const Sequelize = require('sequelize');
 const axios = require('axios');
 let exam = {};
-const abstractionRootUrl = require('../abstractionUrl');
+var env = process.env.NODE_ENV || 'development';
+var config = require(__dirname + '/../config/config.json')[env];
 
 exports.getQuestions = (req, res) => {
   return authentication.validateUser(req).then((userExist) => {
     return axios({
       method: 'get',
-      url: abstractionRootUrl+'questions'
+      url: config.abstractionRootUrl+'questions'
     }).then(function (response) {
       console.log('response:', response);
       return response.data
@@ -51,7 +52,7 @@ exports.createQuestion = (req, resp) => {
       }
       return axios({
         method: 'post',
-        url: abstractionRootUrl+'createQuestion',
+        url: config.abstractionRootUrl+'createQuestion',
         data: question
       }).then(function (response) {
         console.log('response:', response);
@@ -82,7 +83,7 @@ exports.allQuestions = (req, resp) => {
     } else {
       return axios({
         method: 'get',
-        url: abstractionRootUrl+'allQuestions'
+        url: config.abstractionRootUrl+'allQuestions'
       }).then(function (response) {
         console.log('response:', response);
         return response.data
