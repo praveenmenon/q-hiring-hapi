@@ -73,7 +73,7 @@ const updateResult = (resultId, result) => {
       return({ error: response.data.error });
     }
   }).catch((error) => {
-    return({ error: error });
+    return({ error: error }).code(422)
   })
 }
 
@@ -86,10 +86,10 @@ const createResult = (result) => {
     if (response.status === 200) {
       return({ message: response.data.message, resultId: response.data.resultId });
     } else {
-      return({ error: response.data.error });
+      return({ error: response.data.error }).code(422)
     }
   }).catch((error) => {
-    return({ error: error });
+    return({ error: error }).code(422)
   })
 }
 
@@ -100,7 +100,7 @@ const getQuestion = (element) => {
   }).then(function (response) {
     return response
   }).catch((error) => {
-    return({ error: error });
+    return({ error: error }).code(422)
   });
 }
 
@@ -111,7 +111,7 @@ const getResult = (resultId) => {
   }).then(function (response) {
     return response
   }).catch((error) => {
-    return({ error: error });
+    return({ error: error }).code(422)
   })
 }
 
