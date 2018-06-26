@@ -187,6 +187,14 @@ const resultRoutes = [{
     cors: corsHeader,
     tags: ['api'],
     validate: {
+      payload: {
+        exam: {
+          section_number: Joi.number().required(),
+          answers: Joi.array().items(Joi.object()),
+          user_id: Joi.number().required(),
+          resultId: Joi.number()
+        }
+      },
       headers:
       Joi.object({
         'authorization': Joi.string().required().description('Authentication token is must to varify you'),
