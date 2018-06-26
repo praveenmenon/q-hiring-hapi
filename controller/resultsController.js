@@ -4,6 +4,7 @@ const moment = require('moment');
 const async = require("async");
 const axios = require('axios');
 const abstractionRootUrl = require('../abstractionUrl');
+const queries = require('../queries/index');
 
 const authentication = require('../modules/authenticate')
 
@@ -15,7 +16,7 @@ exports.saveResults = (req, res) => {
   const promise = new Promise((resolve, reject) => {
     examResults.answers.forEach((element, index, array) => {
       return authentication.validateUser(req).then((userExist) => {
-        return getQuestion(element).then(function (response) {
+        return queries.questions.getQuestion(element).then(function (response) {
           if (response.status === 200) {
             if (response.data.question.answer === element.user_answer) score += 1;
             itemsProcessed++;
@@ -29,20 +30,20 @@ exports.saveResults = (req, res) => {
               }
               if (examResults.section_number === 1) {
                 result.section1 = score;
-                return createResult(result).then(function(response){
+                return queries.results.createResult(result).then(function(response){
                   resolve({ message: response.message, resultId: response.resultId });
                 })
               } else if (examResults.section_number === 2) {
                 result.section2 = score;
-                return updateResult(examResults.resultId, result).then(function(response){
+                return queries.results.updateResult(examResults.resultId, result).then(function(response){
                   resolve({ message: response.message, resultId: response.resultId });
                 })
               } else {
-                return getResult(examResults.resultId).then(function (response) {
+                return queries.results.getResult(examResults.resultId).then(function (response) {
                   if (response.status === 200) {
                     result.section3 = score;
                     result.total_score = response.data.result.section_1 + response.data.result.section_2;
-                    return updateResult(response.data.result.id, result).then(function(response){
+                    return queries.results.updateResult(response.data.result.id, result).then(function(response){
                       resolve({ message: response.message, resultId: response.resultId });
                     })
                   } else {
@@ -59,60 +60,6 @@ exports.saveResults = (req, res) => {
     });
   })
   return promise
-}
-
-const updateResult = (resultId, result) => {
-  return axios({
-    method: 'put',
-    url: `${abstractionRootUrl}updateResult/${resultId}`,
-    data: result
-  }).then(function (response) {
-    if (response.status === 200) {
-      return({ message: response.data.message, resultId: resultId });
-    } else {
-      return({ error: response.data.error });
-    }
-  }).catch((error) => {
-    return({ error: error }).code(422)
-  })
-}
-
-const createResult = (result) => {
-  return axios({
-    method: 'post',
-    url: `${abstractionRootUrl}createResult`,
-    data: result
-  }).then(function (response) {
-    if (response.status === 200) {
-      return({ message: response.data.message, resultId: response.data.resultId });
-    } else {
-      return({ error: response.data.error }).code(422)
-    }
-  }).catch((error) => {
-    return({ error: error }).code(422)
-  })
-}
-
-const getQuestion = (element) => {
-  return axios({
-    method: 'get',
-    url: `${abstractionRootUrl}getQuestion/${element.id}`
-  }).then(function (response) {
-    return response
-  }).catch((error) => {
-    return({ error: error }).code(422)
-  });
-}
-
-const getResult = (resultId) => {
-  return axios({
-    method: 'get',
-    url: `${abstractionRootUrl}getResult/${resultId}`
-  }).then(function (response) {
-    return response
-  }).catch((error) => {
-    return({ error: error }).code(422)
-  })
 }
 
 exports.getResults = (req, res) => {
