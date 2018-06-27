@@ -45,7 +45,7 @@ const userRoutes = [{
         branch: Joi.string().required(),
         batch: Joi.string().required().alphanum(),
         yearofpassing: Joi.number().min(2000).required(),
-        phone: Joi.number().required(),
+        phone: Joi.string().regex(/^\(?([0-9]{3})\)?[-]?([0-9]{3})[-]?([0-9]{4})$/).required(),
         city: Joi.string().required(),
         password: Joi.any().required(),
         passwordconfirmation: Joi.any().required()

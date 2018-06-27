@@ -3,7 +3,8 @@ const model = require('../models');
 const moment = require('moment');
 const async = require("async");
 const axios = require('axios');
-const abstractionRootUrl = require('../abstractionUrl');
+var env = process.env.NODE_ENV || 'development';
+var config = require(__dirname + '/../config/config.json')[env];
 const queries = require('../queries/index');
 
 const authentication = require('../modules/authenticate')
