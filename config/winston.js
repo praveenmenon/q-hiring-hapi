@@ -29,6 +29,7 @@ const logger = winston.createLogger({
 // `${info.level}: ${info.message} JSON.stringify({ ...rest }) `
 // 
 if (process.env.NODE_ENV !== 'production') {
+  // For except production the levels are display in server console
   logger.add(new winston.transports.Console({
     format: winston.format.simple()
   }));
