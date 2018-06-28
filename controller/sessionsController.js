@@ -7,6 +7,11 @@ var logger = require('../config/winston')
 exports.createSession = (req, res) => {
   return models.user.findOne({ where: { email: req.payload.email } }).then(function(user) {
     if (!user.validPassword(req.payload.password)) {
+      logger.log({
+        level: 'error',
+        message: 'invalid password',
+        error: error
+      });
       return { error: 'invalid password' }
     } else {
       return user.createSession({ authToken: jwt.sign({ email: req.payload.email }, privateKey, { expiresIn: '60m' })}).then((userSession) => {
