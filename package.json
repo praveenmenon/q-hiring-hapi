@@ -8,7 +8,7 @@
     "test": "export NODE_ENV=test || SET \"NODE_ENV=test\" && mocha test/test.js",
     "start": "./node_modules/nodemon/bin/nodemon.js app.js",
     "test-watch": "nodemon --exec 'npm test'",
-    "migrate":"sequelize db:migrate"
+    "migrate": "sequelize db:migrate"
   },
   "repository": {
     "type": "git",
@@ -36,7 +36,8 @@
     "nodemon": "^1.17.4",
     "pg": "^7.4.3",
     "sequelize": "^4.37.8",
-    "vision": "^5.3.3"
+    "vision": "^5.3.3",
+    "winston": "^3.0.0"
   },
   "devDependencies": {
     "chai": "^4.1.2",

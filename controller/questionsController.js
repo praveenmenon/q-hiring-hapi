@@ -6,35 +6,36 @@ const axios = require('axios');
 let exam = {};
 var env = process.env.NODE_ENV || 'development';
 var config = require(__dirname + '/../config/config.json')[env];
+var logger = require('../config/winston')
 
 exports.getQuestions = (req, res) => {
   return authentication.validateUser(req).then((userExist) => {
     return axios({
       method: 'get',
-      url: config.abstractionRootUrl+'questions'
+      url: config.abstractionRootUrl + 'questions'
     }).then(function (response) {
-      console.log('response:', response);
+      logger.log({
+        level: 'info',
+        message: 'Success in listing the questions'
+      });
       return response.data
     }).catch((error) => {
       if (error.response) {
-        console.log(error.response.data);
-        console.log(error.response.status);
-        console.log(error.response.headers);
         return error.response;
       } else if (error.request) {
-        console.log(error.request);
         return error.request;
       } else {
-        console.log('Error', error.message);
         return error.message;
       }
+      logger.log({
+        level: 'error',
+        message: 'Faliure in listing the questions',
+        error: error
+      });
       return error.config;
-      console.log(error.config);
     });
   });
 };
-
-
 
 exports.createQuestion = (req, resp) => {
   return authentication.validateUser(req).then((userExist) => {
@@ -52,7 +53,7 @@ exports.createQuestion = (req, resp) => {
       }
       return axios({
         method: 'post',
-        url: config.abstractionRootUrl+'createQuestion',
+        url: config.abstractionRootUrl + 'createQuestion',
         data: question
       }).then(function (response) {
         console.log('response:', response);
@@ -83,7 +84,7 @@ exports.allQuestions = (req, resp) => {
     } else {
       return axios({
         method: 'get',
-        url: config.abstractionRootUrl+'allQuestions'
+        url: config.abstractionRootUrl + 'allQuestions'
       }).then(function (response) {
         console.log('response:', response);
         return response.data
