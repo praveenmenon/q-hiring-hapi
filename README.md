@@ -198,3 +198,7 @@ To run the seed data - `$ sequelize db:seed all`
  Reference: 
 
   `https://www.npmjs.com/package/hapi-swagger`
+
+
+
+  testing 1
