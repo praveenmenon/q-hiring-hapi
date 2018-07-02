@@ -201,6 +201,4 @@ To run the seed data - `$ sequelize db:seed all`
 
 
 
-  testing 1
-
-  testing 2
+fffffff
