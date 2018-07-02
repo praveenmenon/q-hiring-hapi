@@ -186,16 +186,8 @@ const feedbackRoutes = [{
       headers:
       Joi.object({
         'authorization': Joi.string().required().description('Authentication token is must to varify you'),
-        'email': Joi.string().required().email().description('Email is must to varify you')
+        'email': Joi.string().required().email().description('Email is required to varify the user')
       }).unknown(),
-      payload: {
-        email: Joi.string().required().email(),
-        overall: Joi.number().required(),
-        verbal: Joi.number().required(),
-        logical: Joi.number().required(),
-        quantitative: Joi.number().required(),
-        description: Joi.string()
-      },
       failAction: async (request, h, err) => {
           throw err;
       }
